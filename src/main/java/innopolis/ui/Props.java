@@ -14,4 +14,8 @@ public interface Props extends Config {
 
     @Key("yandex.url")
     String yandexUrl();
+
+    @Key("swagLabs.url")
+    String swagLabsUrl();
+
 }

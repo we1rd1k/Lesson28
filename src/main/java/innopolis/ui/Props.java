@@ -18,4 +18,6 @@ public interface Props extends Config {
     @Key("swagLabs.url")
     String swagLabsUrl();
 
+    @Key("selenium.prac.url")
+    String seleniumPracUrl();
 }

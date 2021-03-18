@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Collections;
 import java.util.List;
 
-public class SwagLabsSortingTest extends BaseTest{
+public class SwagLabsSortingTest extends BaseTest {
 
     private LoginPage loginPage;
     private SLFirstPage slFirstPage;
@@ -38,6 +37,40 @@ public class SwagLabsSortingTest extends BaseTest{
         List<Double> initialPriceList = slFirstPage.getItemsPriceList();
         slFirstPage.setSortOption(option);
         slFirstPage.checkSort(option, initialNameList, initialPriceList);
+    }
+
+    @Test
+    void itemsCheckoutTest() {
+        String firstName = "Test";
+        String lastName = "Test";
+        String zipCode = "Test";
+        loginPage.login(userName, pass)
+                .weAreOnFirstPage()
+                .addItemsToCart(3)
+                .goToCart()
+                .proceedToCheckout()
+                .fillInInformationForm(firstName, lastName, zipCode)
+                .goToNextStep()
+                .finishOrder();
+
+    }
+
+    @Test
+    void formFieldsValidationCheckTest() {
+        loginPage.login(userName, pass)
+                .weAreOnFirstPage()
+                .addItemsToCart(2)
+                .goToCart()
+                .proceedToCheckout()
+                .submitButtonClick()
+                .errorMessageCheck("First Name is required")
+                .setFirstName("test")
+                .submitButtonClick()
+                .errorMessageCheck("Last Name is required")
+                .setLastName("test")
+                .submitButtonClick()
+                .errorMessageCheck("Postal Code is required")
+                .setZipCode("test").goToNextStep();
     }
 
 }

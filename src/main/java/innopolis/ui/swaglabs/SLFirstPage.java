@@ -1,6 +1,7 @@
 package innopolis.ui.swaglabs;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 public class SLFirstPage {
 
+    @Step("Мы на главной")
     public SLFirstPage weAreOnFirstPage() {
         log.info("Мы находимся на стартовой странице");
         $x("//div[contains(text(), 'Products')]").shouldBe(visible);

@@ -11,15 +11,18 @@
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
-        <junit.jupiter.version>5.6.2</junit.jupiter.version>
-        <junit.platform.version>1.6.2</junit.platform.version>
-        <apache.maven.plugins.version>3.0.0-M5</apache.maven.plugins.version>
-        <webdrivermanager.version  >4.3.1</webdrivermanager.version>
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <junit.platform.version>1.7.0</junit.platform.version>
+        <apache.maven.plugins.version>2.20</apache.maven.plugins.version>
+        <webdrivermanager.version>4.3.1</webdrivermanager.version>
         <selenide.version>5.12.2</selenide.version>
         <aeonbits.version>1.0.10</aeonbits.version>
         <slf4j.version>1.7.28</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.18.18</lombok.version>
+        <aspectj.version>1.8.10</aspectj.version>
+        <allure.version>2.13.8</allure.version>
+        <allure.maven>2.8</allure.maven>
     </properties>
 
     <dependencies>
@@ -65,6 +68,27 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -74,13 +98,55 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${apache.maven.plugins.version}</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>junit.jupiter.extensions.autodetection.enabled</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven}</version>
+                <configuration>
+                    <reportVersion>2.4.1</reportVersion>
+                    <resultsDirectory>${basedir}/target/allure-results</resultsDirectory>
+                    <reportDirectory>${basedir}/target/allure-results</reportDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${apache.maven.plugins.version}</version>
+                <version>3.0.0-M5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

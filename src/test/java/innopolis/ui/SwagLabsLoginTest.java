@@ -46,7 +46,6 @@ public class SwagLabsLoginTest extends BaseTest{
     private static Stream<Arguments> correctLoginCred() {
         return Stream.of(
                 Arguments.of("standard_user","secret_sauce"),
-                Arguments.of("locked_out_user","secret_sauce"),
                 Arguments.of("problem_user","secret_sauce"),
                 Arguments.of("performance_glitch_user","secret_sauce")
         );

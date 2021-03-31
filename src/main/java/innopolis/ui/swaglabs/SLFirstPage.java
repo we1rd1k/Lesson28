@@ -55,7 +55,7 @@ public class SLFirstPage {
                 assertEquals(initialNameList.stream().sorted().collect(Collectors.toList()), getItemsNameList());
                 break;
             case "Name (Z to A)":
-                sort((List) initialNameList);
+                sort(initialNameList);
                 reverse(initialNameList);
                 assertEquals(initialNameList, getItemsNameList());
                 break;
@@ -63,7 +63,7 @@ public class SLFirstPage {
                 assertEquals(initialPriceList.stream().sorted().collect(Collectors.toList()), getItemsPriceList());
                 break;
             case "Price (high to low)":
-                sort((List) initialPriceList);
+                sort(initialPriceList);
                 reverse(initialPriceList);
                 assertEquals(initialPriceList, getItemsPriceList());
                 break;
